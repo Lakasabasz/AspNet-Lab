@@ -1,0 +1,41 @@
+﻿@model Podstawy_widoków.ViewModels.RentalIndexViewModel
+
+@{
+    ViewBag.Title = "Zarządanie wypożyczalnią";
+    Layout = "_Layout";
+}
+<div class="d-flex flex-row">
+    <h2>Lokalizajce</h2>
+    <a asp-controller="RentalManager" asp-action="Add" class="text-decoration-none fs-2">+</a>
+</div>
+@if (Model.Status is not null)
+{
+    @if (Model.Status.Value.Item1)
+    {
+        <div class="bg-success">@Model.Status.Value.Item2</div>
+    }
+    else
+    {
+        <div class="bg-danger">@Model.Status.Value.Item2</div>
+    }
+}
+<div class="d-flex flex-column">
+    @foreach (var row in Model.Localizations)
+    {
+        <a asp-controller="RentalManager" asp-action="Details" asp-route-id="@row.Id">
+            <div class="d-flex flex-row border-dark border-bottom justify-content-between align-items-center text-decoration-none text-dark">
+                <img src=@row.ImageUrl alt="Zdjęcie" style="height: 10vh; width: 10vw" class="d-inline-block"/>
+                <h2 class="w-100 ps-3">@row.Name</h2>
+                <p class="w-25">@row.Address</p>
+                @if(row.Opened)
+                {
+                    <p style="width: 10vw" class="text-success">Otwarty</p>
+                }
+                else
+                {
+                    <p style="width: 10vw" class="text-danger">Zamknięty</p>
+                }
+            </div>
+        </a>
+    }
+</div>

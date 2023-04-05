@@ -1,0 +1,32 @@
+﻿@model VehicleManagerAddViewModel
+
+@{
+    ViewBag.Title = "Dodaj pojazd";
+    Layout = "_Layout";
+}
+
+<h2>Dodaj pojazd</h2>
+<form asp-action="AddItem" asp-controller="VehicleManager" class="d-flex flex-column">
+    <input type="text" name="Name" placeholder="Nazwa" required="required"/>
+    <textarea name="Description" placeholder="Opis" required="required"></textarea>
+    <input type="url" name="ImageUrl" placeholder="Url obrazka" required="required"/>
+    <div class="d-flex flex-row">
+        <p>Typ </p>
+        <select name="Type">
+            @foreach (var option in Model.Types)
+            {
+                <!option value="@option">@option</!option>
+            }
+        </select>
+    </div>
+    <div class="d-flex flex-row">
+            <p>Lokalizacja </p>
+            <select name="Localization">
+                @foreach (var option in Model.Localizations)
+                {
+                    <!option value="@option.Id">@option.Name</!option>
+                }
+            </select>
+        </div>
+    <input type="submit" class="btn btn-outline-primary" value="Dodaj"/>
+</form>

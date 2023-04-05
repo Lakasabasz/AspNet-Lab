@@ -1,0 +1,30 @@
+﻿@using Podstawy_widoków.ViewModels
+@model Podstawy_widoków.ViewModels.VehicleDetailsViewModel
+
+@{
+    ViewBag.Title = "Szczegóły";
+    Layout = "_Layout";
+}
+
+<div class="d-flex flex-row">
+    <div class="w-25">
+        <img src=@Model.ImageUrl alt="Zdjęcie" class="w-100 h-100"/>
+    </div>
+    <div>
+        <h2>@Model.Name</h2>
+        <p>@Model.Description</p>
+        @if (Model.State == VehicleState.Free)
+        {
+            <h3>Stan: <span style="color: green">Dostępny</span></h3>
+        } else if (Model.State == VehicleState.Reserved)
+        {
+            <h3>Stan: <span style="color: orange">Zarezerwowany</span></h3>
+        } else if (Model.State == VehicleState.Occupied)
+        {
+            <h3>Stan: <span style="color: red">Zajęty</span></h3>
+        } else if (Model.State == VehicleState.Dumb)
+        {
+            <h3>Stan: <span style="color: gray">Niedostępny</span></h3>
+        }
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@using Podstawy_widoków.ViewModels
+@model Podstawy_widoków.ViewModels.VehicleItemViewModel
+
+@{
+    ViewBag.Title = "Lista modeli";
+    Layout = "_Layout";
+}
+
+<h2>Modele</h2>
+<div class="d-flex flex-column">
+    @foreach (var row in Model.VehicleRecords)
+    {
+        <a asp-controller="Vehicles" asp-action="Details" asp-route-id="@row.Id">
+            <div class="d-flex flex-row border-dark border-bottom align-items-center">
+                <img src=@row.ImageUrl alt="Zdjęcie" style="height: 10vh; width: 10vw" class="d-inline-block"/>
+                <h2 class="w-100 ps-3">@row.Name</h2>
+                @if(row.State == VehicleState.Dumb)
+                {
+                    <p style="width: 10vw">Nie dostępny</p>
+                }
+                else if(row.State == VehicleState.Free)
+                {
+                    <p style="width: 10vw">Dostępny</p>
+                }
+                else if (row.State == VehicleState.Occupied)
+                {
+                    <p style="width: 10vw">Zajęty</p>
+                }
+                else
+                {
+                    <p style="width: 10vw">Zarezerwowany</p>
+                }
+            </div>
+        </a>
+    }
+</div>

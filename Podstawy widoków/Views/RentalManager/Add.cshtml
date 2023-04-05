@@ -1,0 +1,46 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Dodaj wypożyczalnię";
+    Layout = "_Layout";
+}
+
+<h2>Dodaj wypożyczalnię</h2>
+<form asp-action="AddItem" asp-controller="RentalManager" class="d-flex flex-column">
+    <input type="text" name="Name" placeholder="Nazwa" required="required"/>
+    <div class="d-flex flex-row">
+        <input type="text" name="City" placeholder="Miasto" required="required"/>
+        <input type="text" name="Street" placeholder="Ulica" required="required"/>
+        <input type="number" name="BuildingNumber" placeholder="Numer budynku" required="required"/>
+    </div>
+    <input type="url" name="ImageUrl" placeholder="Url obrazka"/>
+    <div class="d-flex flex-row">
+        <p>Dni w których jest otwarta wypożyczalnia: od</p>
+        <select name="DayBegin">
+            <option value="1" selected="selected">Poniedziałek</option>
+            <option value="2">Wtorek</option>
+            <option value="3">Środa</option>
+            <option value="4">Czwartek</option>
+            <option value="5">Piątek</option>
+            <option value="6">Sobota</option>
+            <option value="0">Niedziela</option>
+        </select>
+        <p>do</p>
+        <select name="DayEnd">
+            <option value="1">Poniedziałek</option>
+            <option value="2">Wtorek</option>
+            <option value="3">Środa</option>
+            <option value="4">Czwartek</option>
+            <option value="5" selected="selected">Piątek</option>
+            <option value="6">Sobota</option>
+            <option value="0">Niedziela</option>
+        </select>
+    </div>
+    <div class="d-flex flex-row">
+        <p>Dni w których jest otwarta wypożyczalnia: od</p>
+        <input name="HourBegin" type="number" min="0" max="23" value="8"/>
+        <p>do</p>
+        <input name="HourEnd" type="number" min="0" max="23" value="21"/>
+    </div>
+    <input type="submit" class="btn btn-outline-primary" value="Dodaj"/>
+</form>

@@ -1,0 +1,21 @@
+﻿@model Podstawy_widoków.ViewModels.LocalizationDetailsViewModel
+
+@{
+    ViewBag.Title = "Szczegóły";
+    Layout = "_Layout";
+}
+
+<div class="d-flex flex-row">
+    <div class="w-25">
+        <img src=@Model.ImageUrl alt="Zdjęcie" class="w-100 h-100"/>
+    </div>
+    <div>
+        <h2>@Model.Name</h2>
+        <p>@Model.Address</p>
+        <p>@Model.OpenHours</p>
+    </div>
+</div>
+<div class="d-flex align-items-end">
+    <a asp-controller="RentalManager" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edytuj</a>
+    <a asp-controller="RentalManager" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Usuń</a>
+</div>

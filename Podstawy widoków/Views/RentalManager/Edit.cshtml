@@ -1,0 +1,47 @@
+﻿@model Podstawy_widoków.ViewModels.LocalizationEditViewModel
+
+@{
+    ViewBag.Title = "Edytuj wypożyczalnię";
+    Layout = "_Layout";
+}
+
+<h2>Edytuj wypożyczalnię</h2>
+<form asp-action="EditItem" asp-controller="RentalManager" class="d-flex flex-column">
+    <input type="text" name="Id" value="@Model.Id" class="collapse"/>
+    <input type="text" name="Name" placeholder="Nazwa" value="@Model.Name" required="required"/>
+    <div class="d-flex flex-row">
+        <input type="text" name="City" placeholder="Miasto" value="@Model.City" required="required"/>
+        <input type="text" name="Street" placeholder="Ulica" value="@Model.Street" required="required"/>
+        <input type="number" name="BuildingNumber" placeholder="Numer budynku" value="@Model.StreetNumber" required="required"/>
+    </div>
+    <input type="url" name="ImageUrl" placeholder="Url obrazka" value="@Model.ImageUrl"/>
+    <div class="d-flex flex-row">
+        <p>Dni w których jest otwarta wypożyczalnia: od</p>
+        <select name="DayBegin">
+            <!option value="1" @(Model.DayBegin == 1 ? "selected" : "")>Poniedziałek</!option>
+            <!option value="2" @(Model.DayBegin == 2 ? "selected" : "")>Wtorek</!option>
+            <!option value="3" @(Model.DayBegin == 3 ? "selected" : "")>Środa</!option>
+            <!option value="4" @(Model.DayBegin == 4 ? "selected" : "")>Czwartek</!option>
+            <!option value="5" @(Model.DayBegin == 5 ? "selected" : "")>Piątek</!option>
+            <!option value="6" @(Model.DayBegin == 6 ? "selected" : "")>Sobota</!option>
+            <!option value="0" @(Model.DayBegin == 0 ? "selected" : "")>Niedziela</!option>
+        </select>
+        <p>do</p>
+        <select name="DayEnd">
+            <!option value="1" @(Model.DayEnd == 1 ? "selected" : "")>Poniedziałek</!option>
+            <!option value="2" @(Model.DayEnd == 2 ? "selected" : "")>Wtorek</!option>
+            <!option value="3" @(Model.DayEnd == 3 ? "selected" : "")>Środa</!option>
+            <!option value="4" @(Model.DayEnd == 4 ? "selected" : "")>Czwartek</!option>
+            <!option value="5" @(Model.DayEnd == 5 ? "selected" : "")>Piątek</!option>
+            <!option value="6" @(Model.DayEnd == 6 ? "selected" : "")>Sobota</!option>
+            <!option value="0" @(Model.DayEnd == 0 ? "selected" : "")>Niedziela</!option>
+        </select>
+    </div>
+    <div class="d-flex flex-row">
+        <p>Godziny w których jest otwarta wypożyczalnia: od</p>
+        <input name="HourBegin" type="number" min="0" max="23" value="@Model.HourBegin"/>
+        <p>do</p>
+        <input name="HourEnd" type="number" min="0" max="23" value="@Model.HourEnd"/>
+    </div>
+    <input type="submit" class="btn btn-outline-primary" value="Dodaj"/>
+</form>
