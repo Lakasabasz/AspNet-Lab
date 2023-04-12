@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Podstawy_widoków.DTOs;
 using Podstawy_widoków.Models;
@@ -12,12 +13,14 @@ public class VehicleManagerController : Controller
     private readonly IRepository<Vehicle> _vehicles;
     private readonly IRepository<VehicleType> _types;
     private readonly IRepository<Localization> _localizations;
+    private readonly IMapper _mapper;
 
-    public VehicleManagerController(IRepository<Vehicle> vehicles, IRepository<VehicleType> types, IRepository<Localization> localizations)
+    public VehicleManagerController(IRepository<Vehicle> vehicles, IRepository<VehicleType> types, IRepository<Localization> localizations, IMapper mapper)
     {
         _vehicles = vehicles;
         _types = types;
         _localizations = localizations;
+        _mapper = mapper;
     }
 
     public IActionResult Index(bool? status = null, string description = "")
@@ -38,7 +41,7 @@ public class VehicleManagerController : Controller
 
     public IActionResult AddItem(AddVehicle vehicle)
     {
-        _vehicles.Add(Vehicle.FromAddVehicle(vehicle));
+        _vehicles.Add(_mapper.Map<Vehicle>(vehicle));
         _vehicles.SaveChanges();
         return RedirectToAction(nameof(Index), new { Status = true, Description = "Pomyślnie dodano" });
     }
@@ -47,7 +50,7 @@ public class VehicleManagerController : Controller
     {
         var vehicle = _vehicles.Get(id);
         if(vehicle is null) return RedirectToAction(nameof(Index), new { Status = false, Description = "Nieznany indeks" });
-        return View(new VehicleDetailsViewModel(vehicle));
+        return View(_mapper.Map<VehicleDetailsViewModel>(vehicle));
     }
 
     public IActionResult EditItem(EditVehicle vehicle)

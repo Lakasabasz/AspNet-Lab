@@ -1,6 +1,12 @@
+using AutoMapper;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Podstawy_widoków.DTOs;
+using Podstawy_widoków.MappingProfiles;
 using Podstawy_widoków.Models;
 using Podstawy_widoków.Services;
+using Podstawy_widoków.Validators;
+using Podstawy_widoków.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +23,10 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<IRepository<Localization>, LocalizationRepositoryInMemory>();
     builder.Services.AddScoped<IRepository<VehicleType>, VehicleTypesRepositoryInMemory>();
 }
+
+builder.Services.AddAutoMapper(typeof(VehicleProfile));
+builder.Services.AddScoped<IValidator<AddLocation>, AddLocationValidator>();
+builder.Services.AddScoped<IValidator<AddReservation>, AddReservationValidator>();
 
 var app = builder.Build();
 

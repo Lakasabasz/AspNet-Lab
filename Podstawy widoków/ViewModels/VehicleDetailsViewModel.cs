@@ -24,4 +24,12 @@ public class VehicleDetailsViewModel
         else
             State = VehicleState.Free;
     }
+
+    public VehicleDetailsViewModel()
+    {
+        ImageUrl = string.Empty;
+        Name = string.Empty;
+        Description = string.Empty;
+        Localization = string.Empty;
+    }
 }

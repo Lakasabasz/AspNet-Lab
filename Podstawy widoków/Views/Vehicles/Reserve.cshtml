@@ -1,0 +1,12 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Rezerwacja";
+    Layout = "_Layout";
+}
+
+<h2>Rezerwacja</h2>
+<form asp-action="ReserveItem" asp-controller="Vehicles" class="d-flex flex-column">
+    <div class="d-flex flex-row"><p>Od</p><input type="datetime-local" name="Begin"/><p>do</p><input type="datetime-local" name="End"/></div>
+    <input type="submit" value="Zarezerwuj"/>
+</form>

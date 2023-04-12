@@ -20,13 +20,13 @@
         </select>
     </div>
     <div class="d-flex flex-row">
-            <p>Lokalizacja </p>
-            <select name="Localization">
-                @foreach (var option in Model.Localizations)
-                {
-                    <!option value="@option.Id">@option.Name</!option>
-                }
-            </select>
-        </div>
+        <p>Lokalizacja </p>
+        <select name="Localization">
+            @foreach (var option in Model.Localizations)
+            {
+                <!option value="@option.Id">@option.Name</!option>
+            }
+        </select>
+    </div>
     <input type="submit" class="btn btn-outline-primary" value="Dodaj"/>
 </form>

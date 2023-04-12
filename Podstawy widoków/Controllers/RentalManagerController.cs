@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Podstawy_widoków.DTOs;
 using Podstawy_widoków.Models;
 using Podstawy_widoków.Services;
@@ -9,10 +10,12 @@ namespace Podstawy_widoków.Controllers;
 public class RentalManagerController : Controller
 {
     private readonly IRepository<Localization> _localizations;
+    private readonly IMapper _mapper;
     
-    public RentalManagerController(IRepository<Localization> localizations)
+    public RentalManagerController(IRepository<Localization> localizations, IMapper mapper)
     {
         _localizations = localizations;
+        _mapper = mapper;
     }
 
     // GET
@@ -31,7 +34,7 @@ public class RentalManagerController : Controller
 
     public IActionResult AddItem(AddLocation location)
     {
-        _localizations.Add(Localization.FromAddLocalization(location));
+        _localizations.Add(_mapper.Map<Localization>(location));
         _localizations.SaveChanges();
         return RedirectToAction(nameof(Index), new { Status = true, Description = "Dodano pomyślnie" });
     }
