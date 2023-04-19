@@ -7,6 +7,7 @@ using Podstawy_widoków.Models;
 using Podstawy_widoków.Services;
 using Podstawy_widoków.Validators;
 using Podstawy_widoków.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,8 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<IRepository<Localization>, LocalizationRepositoryInMemory>();
     builder.Services.AddScoped<IRepository<VehicleType>, VehicleTypesRepositoryInMemory>();
 }
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDatabaseInMemory>();
 
 builder.Services.AddAutoMapper(typeof(VehicleProfile));
 builder.Services.AddScoped<IValidator<AddLocation>, AddLocationValidator>();
@@ -43,10 +46,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();
