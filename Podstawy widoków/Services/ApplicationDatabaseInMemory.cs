@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Podstawy_widoków.Models;
 
@@ -76,8 +77,15 @@ public class ApplicationDatabaseInMemory: IdentityDbContext
                 ImageUrl = "/img/12162_1.jpg"
             }
         };
+        var roles = new[]
+        {
+            new IdentityRole() { Name = "Admin", Id = Guid.NewGuid().ToString(), NormalizedName = "ADMIN"},
+            new IdentityRole() { Name = "Operator", Id = Guid.NewGuid().ToString(), NormalizedName = "OPERATOR"},
+            new IdentityRole() { Name = "User", Id = Guid.NewGuid().ToString(), NormalizedName = "USER"},
+        };
         modelBuilder.Entity<VehicleType>().HasData(types);
         modelBuilder.Entity<Localization>().HasData(localizations);
         modelBuilder.Entity<Vehicle>().HasData(vehicles);
+        modelBuilder.Entity<IdentityRole>().HasData(roles);
     }
 }
