@@ -25,7 +25,10 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddScoped<IRepository<VehicleType>, VehicleTypesRepositoryInMemory>();
 }
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDatabaseInMemory>();
+builder.Services
+    .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDatabaseInMemory>();
 
 builder.Services.AddAutoMapper(typeof(VehicleProfile));
 builder.Services.AddScoped<IValidator<AddLocation>, AddLocationValidator>();
@@ -46,12 +49,27 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<ApplicationDatabaseInMemory>();
+db.Database.EnsureCreated();
+var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+var rootUser = new IdentityUser("root@localhost")
+{
+    EmailConfirmed = true
+};
+await userManager.CreateAsync(rootUser, "Root!2");
+await userManager.AddToRoleAsync(rootUser, "admin");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=UserManagement}/{action=Index}/{id?}");
 
 app.MapRazorPages();
 
