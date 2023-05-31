@@ -28,6 +28,9 @@
         }
     </div>
 </div>
-<div class="d-flex align-items-end">
-    <a asp-controller="Vehicles" asp-action="Reserve" asp-route-id="@Model.Id" class="btn btn-primary">Zarezerwuj</a>
-</div>
+@if (User.IsInRole("User"))
+{
+    <div class="d-flex align-items-end">
+        <a asp-controller="Vehicles" asp-action="Reserve" asp-route-id="@Model.Id" class="btn btn-primary">Zarezerwuj</a>
+    </div>
+}

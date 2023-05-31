@@ -1,4 +1,3 @@
-using AutoMapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Podstawy_widoków.DTOs;
@@ -6,7 +5,6 @@ using Podstawy_widoków.MappingProfiles;
 using Podstawy_widoków.Models;
 using Podstawy_widoków.Services;
 using Podstawy_widoków.Validators;
-using Podstawy_widoków.ViewModels;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,16 +58,46 @@ var rootUser = new IdentityUser("root@localhost")
 await userManager.CreateAsync(rootUser, "Root!2");
 await userManager.AddToRoleAsync(rootUser, "admin");
 
+var operatorUser = new IdentityUser("operator@localhost")
+{
+    EmailConfirmed = true
+};
+await userManager.CreateAsync(operatorUser, "Oper!1");
+await userManager.AddToRoleAsync(operatorUser, "Operator");
+
+var userUser = new IdentityUser("user@localhost")
+{
+    EmailConfirmed = true
+};
+await userManager.CreateAsync(userUser, "User!1");
+await userManager.AddToRoleAsync(userUser, "User");
+
+db.Reservations.Add(new Reservation()
+{
+    Claimer = userUser,
+    Id = Guid.NewGuid(),
+    ReservationDate = DateTime.Now.AddDays(-1),
+    ReservationExpire = DateTime.Now.AddDays(5),
+    Vehicle = db.Vehicles.First()
+});
+db.SaveChanges();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapAreaControllerRoute(
+    name: "UserManagement",
+    areaName: "Admin",
+    pattern: "Admin/{controller}/{action}/{id?}");
+
+app.MapAreaControllerRoute(
+    name: "ReservationList",
+    areaName: "Users",
+    pattern: "Users/{controller}/{action}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=UserManagement}/{action=Index}/{id?}");
 
 app.MapRazorPages();
 

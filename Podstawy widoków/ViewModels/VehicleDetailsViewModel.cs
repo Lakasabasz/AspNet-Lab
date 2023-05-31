@@ -19,7 +19,7 @@ public class VehicleDetailsViewModel
         Id = vehicle.Id;
         Localization = vehicle.CurrentLocalization.Name;
         if (vehicle.Occupied) State = VehicleState.Occupied;
-        else if (vehicle.Reservations.Any(x => x.ReservationExpire == null || x.ReservationExpire.Value > DateTime.Now))
+        else if (vehicle.Reservations.Any(x => x.ReservationExpire > DateTime.Now))
             State = VehicleState.Reserved;
         else
             State = VehicleState.Free;

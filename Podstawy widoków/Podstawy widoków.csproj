@@ -39,6 +39,10 @@
       <Folder Include="Areas\Admin\Models\" />
       <Folder Include="Areas\Admin\Pages\" />
       <Folder Include="Areas\Admin\Views\" />
+      <Folder Include="Areas\Users\Data\" />
+      <Folder Include="Areas\Users\Models\" />
+      <Folder Include="Areas\Users\Pages\" />
+      <Folder Include="Areas\Users\Views\" />
     </ItemGroup>
 
     <ItemGroup>

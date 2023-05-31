@@ -1,0 +1,27 @@
+﻿@model Podstawy_widoków.Areas.Users.ViewModels.ReservationListViewModel;
+
+@{
+    ViewBag.Title = "Rezerwacje";
+    Layout = "_Layout";
+}
+
+<h2>Rezerwacje</h2>
+
+@if (Model.Reservations.Count == 0)
+{
+    <p>Nie masz żadnej rezerwacji</p>
+}
+else
+{
+    foreach (var row in Model.Reservations)
+    {
+        <div class="d-flex flex-row border-dark border-bottom align-items-center">
+            <div>
+                <img src="@row.Image" alt="Zdjęcie roweru" style="height: 10vh; width: 10vw"/>
+                <p>@row.VehicleName</p>
+                <p>@row.DateStart - @row.DateEnd</p>
+            </div>
+            <a href="/Users/Reservations/Cancel/@row.ReservationId">Anuluj</a>
+        </div>
+    }
+}

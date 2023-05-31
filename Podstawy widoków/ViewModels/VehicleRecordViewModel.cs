@@ -11,7 +11,7 @@ public class VehicleRecordViewModel
         Name = v.Name;
         Localization = v.CurrentLocalization.Name;
         if (v.Occupied) State = VehicleState.Occupied;
-        else if (v.Reservations.Any(x => x.ReservationExpire == null || x.ReservationExpire.Value > DateTime.Now))
+        else if (v.Reservations.Any(x => x.ReservationExpire > DateTime.Now))
             State = VehicleState.Reserved;
         else
             State = VehicleState.Free;

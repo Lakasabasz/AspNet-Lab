@@ -1,10 +1,7 @@
-@using Microsoft.AspNetCore.Identity
-@model dynamic
-
-@inject UserManager<IdentityUser> UserManager
-@inject SignInManager<IdentityUser> SignInManager
+﻿@model Podstawy_widoków.Areas.Admin.ViewModels.ReservationsViewModel
 
 @{
+    ViewBag.Title = "title";
     Layout = null;
 }
 
@@ -65,7 +62,7 @@
             {
                 <!-- Nav Item - Rezerwacje -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="/Admin/ReservationManagement/Index">
+                    <a class="nav-link" href="/Admin/ReservationsController/Index">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Rezerwacje</span></a>
                 </li>
@@ -125,8 +122,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Utworzone konta</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Accounts</div>
+                                                Utworzone rezerwacje</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.ReservationsCount</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -143,7 +140,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Utworzone konta (w tym miesiącu)</div>
+                                                Przyszłe rezerwacje (w tym miesiącu)</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">?</div>
                                         </div>
                                         <div class="col-auto">
@@ -160,18 +157,11 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Aktywowane
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nie odebrane
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.ActivatedPercent</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: @(Model.ActivatedPercent + "%")" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.NotClaimedCount</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -190,7 +180,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Konta nieaktywowane</div>
+                                                Jakiś parametr</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                                         </div>
                                         <div class="col-auto">
@@ -213,17 +203,15 @@
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Zarządzanie kontami</h6>
                                 </div>
-                                @foreach (var account in Model.Users)
+                                @foreach (var reservation in Model.Reservations)
                                 {
                                 <div class="card-body">
-                                    <h4 class="small font-weight-bold">@account.UserName
-                                        <form action="/Admin/UserManagement/UpdateRole" class="float-right">
-                                            <input type="text" name="UserId" value=@account.Id style="display:none;"/>
-                                            <input type="checkbox" name="User" value="true" @(!account.Roles.Contains("User") ? "" : "checked")/>Użytkownik
-                                            <input type="checkbox" name="Operator" value="true" @(!account.Roles.Contains("Operator") ? "" : "checked")/>Operator
-                                            <input type="checkbox" name="Admin" value="true" @(!account.Roles.Contains("Admin") ? "" : "checked")/>Admin
-                                            <input type="submit" value="Aktualizuj"/>
-                                        </form>
+                                    <h4 class="small font-weight-bold">
+                                        <p class="float-left">@reservation.Vehicle</p>
+                                        <p class="float-left">: @reservation.UserName</p>
+                                        <p class="float-left">@reservation.StartDate - @reservation.EndDate</p>
+                                        <a href="/Admin/ReservationsController/MarkAsClaimed?Id=@reservation.Id">Oznacz jako zajęty</a>
+                                        <a href="/Admin/ReservationsController/Delete?Id=@reservation.Id">Anuluj</a>
                                     </h4>
                                 </div>
                                 }

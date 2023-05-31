@@ -2,23 +2,27 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Podstawy_widoków.Areas.Admin.DTOs;
 using Podstawy_widoków.Services;
 
 namespace Podstawy_widoków.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = "Admin")]
 public class UserManagement : Controller
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly ApplicationDatabaseInMemory _db;
+    private readonly ILogger<UserManagement> _logger;
 
-    public UserManagement(ApplicationDatabaseInMemory db)
+    public UserManagement(ApplicationDatabaseInMemory db, ILogger<UserManagement> logger, UserManager<IdentityUser> userManager)
     {
         _db = db;
+        _logger = logger;
+        _userManager = userManager;
     }
 
-    [Authorize(Roles = "Admin")]
     public IActionResult Index()
     {
         var users = _db.Users.Select(x => new {x.Id, x.UserName}).ToList();
@@ -41,6 +45,25 @@ public class UserManagement : Controller
             InActive = _db.Users.Count(x => !x.EmailConfirmed)
         };
         return View(model);
+    }
+    
+    public async Task<IActionResult> UpdateRole(UpdateRoleRequest request)
+    {
+        _logger.LogWarning("Role update A:{RequestAdmin}, O:{RequestOperator}, U:{RequestUser}", request.Admin, request.Operator, request.User);
+        
+        var user = _userManager.Users.FirstOrDefault(x => x.Id == request.UserId);
+        if (user is null) return RedirectToAction(nameof(Index));
+        
+        if (!request.User) await _userManager.RemoveFromRoleAsync(user, "User");
+        else await _userManager.AddToRoleAsync(user, "User");
+
+        if (!request.Operator) await _userManager.RemoveFromRoleAsync(user, "Operator");
+        else await _userManager.AddToRoleAsync(user, "Operator");
+
+        if (!request.Admin) await _userManager.RemoveFromRoleAsync(user, "Admin");
+        else await _userManager.AddToRoleAsync(user, "Admin");
+        
+        return Redirect("/Admin/UserManagement/Index");
     }
     
     public IActionResult Buttons() => View();

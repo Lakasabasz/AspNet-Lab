@@ -64,7 +64,7 @@ public class ApplicationDatabaseInMemory: IdentityDbContext
                     w niewoli⁶⁹, ród Bonapartych గeszcze wypłynie. Po pierwszym Napoleonie znaగdzie się
                     గakiś drugi, a gdyby i ten źle skończył, przyగdzie następny, dopóki గeden po drugim nie
                     uporządkuగą świata.",
-                Id = Guid.NewGuid(), Name = "Rower C", TypeId = types[0].Name, Occupied = true, CurrentLocalizationId = localizations[1].Id,
+                Id = Guid.NewGuid(), Name = "Rower C", TypeId = types[0].Name, Occupied = false, CurrentLocalizationId = localizations[1].Id,
                 ImageUrl = "/img/12162_1.jpg"
             },
             new Vehicle()
