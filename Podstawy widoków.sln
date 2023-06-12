@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Podstawy widoków", "Podstawy widoków\Podstawy widoków.csproj", "{418116CD-6D79-4722-A73B-068FAC35EB5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Podstawy widoków testy", "Podstawy widoków testy\Podstawy widoków testy.csproj", "{4D656EF3-26CB-464C-965E-CA0AFA1B8853}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{418116CD-6D79-4722-A73B-068FAC35EB5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{418116CD-6D79-4722-A73B-068FAC35EB5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{418116CD-6D79-4722-A73B-068FAC35EB5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D656EF3-26CB-464C-965E-CA0AFA1B8853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D656EF3-26CB-464C-965E-CA0AFA1B8853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D656EF3-26CB-464C-965E-CA0AFA1B8853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D656EF3-26CB-464C-965E-CA0AFA1B8853}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

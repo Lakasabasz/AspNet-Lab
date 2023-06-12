@@ -210,8 +210,8 @@
                                         <p class="float-left">@reservation.Vehicle</p>
                                         <p class="float-left">: @reservation.UserName</p>
                                         <p class="float-left">@reservation.StartDate - @reservation.EndDate</p>
-                                        <a href="/Admin/ReservationsController/MarkAsClaimed?Id=@reservation.Id">Oznacz jako zajęty</a>
-                                        <a href="/Admin/ReservationsController/Delete?Id=@reservation.Id">Anuluj</a>
+                                        <a class="btn btn-primary" href="/Admin/ReservationsController/MarkAsClaimed?Id=@reservation.Id">Oznacz jako zajęty</a>
+                                        <a class="btn btn-danger" href="/Admin/ReservationsController/Delete?Id=@reservation.Id">Anuluj</a>
                                     </h4>
                                 </div>
                                 }
